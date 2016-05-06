@@ -86,7 +86,7 @@
                         <version>3.2.1</version>
                         <configuration>
                             <driver>org.postgresql.Driver</driver>
-                            <url>jdbc:postgresql://localhost/signals</url>
+                            <url>jdbc:postgresql://localhost/positions</url>
                             <user>postgres</user>
                             <password>1234</password>
                             <locations>
