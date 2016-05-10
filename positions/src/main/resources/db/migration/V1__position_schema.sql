@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS Car (
   Reference VARCHAR(15) NOT NULL,
   OwnerId INTEGER NOT NULL,
   Description VARCHAR(255) NOT NULL DEFAULT 'NO_DESCRIPTION',
-  Available BIT(1) NOT NULL DEFAULT '1',
-  Enabled BIT(1) NOT NULL DEFAULT '1',
+  Available BOOLEAN NOT NULL DEFAULT TRUE,
+  Enabled BOOLEAN NOT NULL DEFAULT TRUE,
   ActivityStartDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS Contact (
 
 CREATE TABLE IF NOT EXISTS ContactType (
   Id SERIAL PRIMARY KEY,
-  Type VARCHAR(100) NOT NULL -- manager, assitant, driver
+  Type VARCHAR(100) NOT NULL -- manager, assistant, driver
 );
 
 CREATE TABLE IF NOT EXISTS ContactInfo (
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS Bounds ( -- could be named ZoneLocation
 
 
 CREATE VIEW CarPosition AS
-  SELECT Car.Id As Id, Car.Reference AS Reference, ContactInfo.PhoneNumber as PhoneNumber,
+  SELECT Car.Id As Id, Car.Reference AS Reference, Contact.FirstName as DriverName, ContactInfo.PhoneNumber as PhoneNumber,
     Car.Available as Available, LatestCarLocation.LocationId as LocationId,
     LatestCarLocation.Time as Time
   FROM Car
@@ -92,12 +92,21 @@ CREATE VIEW CarPosition AS
     INNER JOIN Contact on Contact.Id = CarDriverContact.ContactId
     INNER JOIN ContactInfo on Contact.ContactInfoId = ContactInfo.Id
     --INNER JOIN CarLocation on Car.Id = CarLocation.CarId
-    INNER JOIN (
+    LEFT JOIN (
       SELECT DISTINCT ON(CarId) Id, CarId, LocationId, Time
       FROM CarLocation
       ORDER BY CarId, Time DESC
     ) LatestCarLocation ON Car.Id = LatestCarLocation.CarId;
 
+
+
+CREATE RULE Position_UPDATE AS ON UPDATE TO CarPosition DO INSTEAD (
+  UPDATE Car SET Available = NEW.Available WHERE Id = OLD.Id; INSERT INTO CarLocation (CarId, LocationId, Time) VALUES (OLD.Id, NEW.LocationId, NEW.Time)
+);
+
+--UPDATE Car SET Available = true;
+--INSERT INTO Location (Latitude, Longitude) VALUES (NEW.Latitude, NEW.Longitude)
+--INSERT INTO CarLocation (CarId, LocationId, Time) VALUES (OLD.CarId, currval('location_id_seq'), NEW.Time)
 
 --
 -- Constraints

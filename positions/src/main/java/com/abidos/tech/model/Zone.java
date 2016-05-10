@@ -16,7 +16,7 @@ public class Zone {
     @Column(nullable = false)
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "zone")
     private Bounds bounds;
 
     public String getName() {

@@ -12,18 +12,24 @@ public class Bounds {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Location northEast;
+    @OneToOne
+    @JoinColumn(name="zoneid")
+    private Zone zone;
 
     @ManyToOne
+    @JoinColumn(name="northeastid")
+    private Location northeast;
+
+    @ManyToOne
+    @JoinColumn(name="southwestid")
     private Location southwest;
 
-    public Location getNorthEast() {
-        return northEast;
+    public Location getNortheast() {
+        return northeast;
     }
 
-    public void setNorthEast(Location northEast) {
-        this.northEast = northEast;
+    public void setNortheast(Location northeast) {
+        this.northeast = northeast;
     }
 
     public Location getSouthwest() {

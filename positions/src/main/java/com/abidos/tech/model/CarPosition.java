@@ -10,6 +10,8 @@ import java.util.Date;
 @Table(name = "CarPosition")
 public class CarPosition implements Serializable {
 
+    public static final String PLATFORM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,6 +29,7 @@ public class CarPosition implements Serializable {
     private Boolean available;
 
     @OneToOne
+    @JoinColumn(name="locationid")
     private Location location;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -70,5 +73,30 @@ public class CarPosition implements Serializable {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public static String getPlatformDateFormat() {
+        return PLATFORM_DATE_FORMAT;
+    }
+
+    @Override
+    public String toString() {
+        return "CarPosition{" +
+                "id=" + id +
+                ", reference='" + reference + '\'' +
+                ", driverName='" + driverName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", available=" + available +
+                ", location=" + location +
+                ", time=" + time +
+                '}';
     }
 }

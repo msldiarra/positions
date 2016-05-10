@@ -39,19 +39,23 @@ public class PositionSaver implements MessageListener {
             CarPosition car = message.getBody(CarPosition.class);
             LOGGER.info("Read car from queue : {} : ", car);
 
+            Location location = new Location();
+            location.setLatitude(car.getLocation().getLatitude());
+            location.setLongitude(car.getLocation().getLongitude());
+
+            entityManager.persist(location);
+
             CarPosition existingCarInfo = new JPAQuery(entityManager)
                     .from(carPosition)
                     .where(carPosition.reference.equalsIgnoreCase(car.getReference()))
                     .singleResult(carPosition);
 
-            Location location = new Location();
-            location.setLatitude(car.getLocation().getLatitude());
-            location.setLongitude(car.getLocation().getLongitude());
-
             existingCarInfo.setLocation(location);
             existingCarInfo.setAvailable(car.getAvailable());
+            existingCarInfo.setTime(car.getTime());
 
             entityManager.merge(existingCarInfo);
+
             LOGGER.info("Car persisted");
 
 

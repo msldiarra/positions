@@ -14,6 +14,7 @@ import javax.jms.JMSContext;
 import javax.jms.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -44,7 +45,9 @@ public class Cars {
 
     @GET
     @PermitAll
-    public Response available(String where) {
+    public Response available(@QueryParam("where") @NotNull String where) {
+
+        LOGGER.info("Retrieving available cars for : {} : ", where);
 
         List<CarPosition> availableCars = new JPAQuery(entityManager)
                 .from(carPosition)
@@ -56,7 +59,7 @@ public class Cars {
                 .where(zone.name.equalsIgnoreCase(where))
                 .singleResult(zone);
 
-        Optional<CarPosition> cars = positions.getAvailableCarsInZone(searchZone, availableCars);
+        List<CarPosition> cars = positions.getAvailableCarsInZone(searchZone, availableCars);
 
         return Response.ok(cars.toString()).build();
     }

@@ -2,12 +2,13 @@ package com.abidos.tech.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @XmlRootElement
 @Table(name = "Location")
-public class Location {
+public class Location implements Serializable {
 
 
     @Id
