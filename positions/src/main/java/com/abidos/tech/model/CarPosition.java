@@ -27,7 +27,6 @@ public class CarPosition implements Serializable {
     private Boolean available;
 
     @OneToOne
-    @Column(nullable = false)
     private Location location;
 
     @Temporal(TemporalType.TIMESTAMP)

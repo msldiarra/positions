@@ -12,8 +12,10 @@ public class Bounds {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
     private Location northEast;
 
+    @ManyToOne
     private Location southwest;
 
     public Location getNorthEast() {

@@ -26,9 +26,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.next.nivell</groupId>
-            <artifactId>alerts</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.abidos.tech</groupId>
+            <artifactId>positions</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

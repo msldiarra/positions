@@ -5,7 +5,7 @@
              version="2.1">
 
 
-    <persistence-unit name="Alerts">
+    <persistence-unit name="Cars">
         <jta-data-source>java:jboss/datasources/PositionsDS</jta-data-source>
         <class>com.abidos.tech.model.CarPosition</class>
         <class>com.abidos.tech.model.Zone</class>
