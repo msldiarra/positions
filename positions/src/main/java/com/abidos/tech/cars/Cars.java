@@ -51,7 +51,7 @@ public class Cars {
 
         List<CarPosition> availableCars = new JPAQuery(entityManager)
                 .from(carPosition)
-                .where(carPosition.available.eq(true))
+                .where(carPosition.available.eq(true), carPosition.location.isNotNull())
                 .list(carPosition);
 
         Zone searchZone = new JPAQuery(entityManager)
