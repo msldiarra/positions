@@ -2,11 +2,13 @@ package com.abidos.tech.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @XmlRootElement
-@Table(name = "ReservableCar")
-public class ReservableCar {
+@Table(name = "CarPosition")
+public class CarPosition implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +29,9 @@ public class ReservableCar {
     @OneToOne
     @Column(nullable = false)
     private Location location;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date time;
 
     public String getDriverName() {
         return driverName;

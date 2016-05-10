@@ -7,7 +7,10 @@
 
     <persistence-unit name="Alerts">
         <jta-data-source>java:jboss/datasources/PositionsDS</jta-data-source>
-        <class>com.abidos.tech.model.ReservableCar</class>
+        <class>com.abidos.tech.model.CarPosition</class>
+        <class>com.abidos.tech.model.Zone</class>
+        <class>com.abidos.tech.model.Bounds</class>
+        <class>com.abidos.tech.model.Location</class>
         <properties>
             <!--<property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>-->

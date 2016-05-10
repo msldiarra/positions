@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS ContactType (
 
 CREATE TABLE IF NOT EXISTS ContactInfo (
   Id SERIAL PRIMARY KEY,
-  Email VARCHAR(100) NOT NULL
+  PhoneNumber VARCHAR(15) NOT NULL
 );
 
 
@@ -81,6 +81,23 @@ CREATE TABLE IF NOT EXISTS Bounds ( -- could be named ZoneLocation
   NorthEastId INTEGER NOT NULL,
   SouthwestId INTEGER NOT NULL
 );
+
+
+CREATE VIEW CarPosition AS
+  SELECT Car.Id As Id, Car.Reference AS Reference, ContactInfo.PhoneNumber as PhoneNumber,
+    Car.Available as Available, LatestCarLocation.LocationId as LocationId,
+    LatestCarLocation.Time as Time
+  FROM Car
+    INNER JOIN CarDriverContact on Car.Id = CarDriverContact.CarId
+    INNER JOIN Contact on Contact.Id = CarDriverContact.ContactId
+    INNER JOIN ContactInfo on Contact.ContactInfoId = ContactInfo.Id
+    --INNER JOIN CarLocation on Car.Id = CarLocation.CarId
+    INNER JOIN (
+      SELECT DISTINCT ON(CarId) Id, CarId, LocationId, Time
+      FROM CarLocation
+      ORDER BY CarId, Time DESC
+    ) LatestCarLocation ON Car.Id = LatestCarLocation.CarId;
+
 
 --
 -- Constraints
