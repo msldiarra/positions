@@ -1,0 +1,25 @@
+
+-- Signing application with alias
+"C:\Program Files\Java\jdk1.8.0_73\bin\keytool" -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+
+-- Listing alias
+"C:\Program Files\Java\jdk1.8.0_73\bin\keytool" -list -v -keystore C:\Users\Malamine\my-release-key.keystore
+
+-- configuring build to sign application
+defaultConfig { ... }
+    signingConfigs {
+        release {
+            storeFile file("my-release-key.keystore")
+            storePassword "123456"
+            keyAlias "alias_name"
+            keyPassword "123456"
+        }
+    }
+    buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+
+
