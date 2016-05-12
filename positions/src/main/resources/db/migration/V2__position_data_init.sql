@@ -43,12 +43,18 @@ INSERT INTO CarDriverContact (CarId, ContactId) VALUES
 
 -- Create zone
 INSERT INTO Zone (Name) VALUES
-  ('Paris');
+  ('Paris'),
+  ('Lyon');
 
 INSERT INTO Location (Latitude, Longitude) VALUES
+  -- Ile de France, France
   (49.241504, 3.5590069),
-  (48.1200811, 1.44617);
+  (48.1200811, 1.44617),
+  -- Lyon, France
+  (45.808425, 4.898393),
+  (45.707486, 4.7718489);
 
 INSERT INTO Bounds (ZoneId, NorthEastId, SouthwestId) VALUES
-  (1 , 1, 2); -- Zone Paris, NorthEast 1, SouthWest 2
+  (1 , 1, 2), -- Zone Paris, NorthEast 1, SouthWest 2
+  (2 , 3, 4); -- Zone Lyon, NorthEast 3, SouthWest 4
 
